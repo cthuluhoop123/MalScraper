@@ -29,12 +29,24 @@ test('getSeasons returns an error if not valid year', async t => {
   }
 })
 
+test('getSeasons returns an error if not valid type', async t => {
+  try {
+    await getSeason(2017, 'fall', 'TVc')
+
+    t.fail()
+  } catch (e) {
+    e.message.includes('[Mal-Scraper]: Invalid type provided')
+      ? t.pass()
+      : t.fail()
+  }
+})
+
 test('getSeasons with type TV returns the correct season', async t => {
   try {
     const data = await getSeason(2017, 'fall', 'TV')
 
-    t.is(data.length, 97)
-    t.is(data[0].title, 'Mahoutsukai no Yome')
+    t.is(data.length, 96)
+    t.is(data[0].title, 'Black Clover')
   } catch (e) {
     console.log(e.message)
     t.fail()
@@ -46,7 +58,7 @@ test('getSeasons with type TVNew returns the correct season', async t => {
     const data = await getSeason(2017, 'fall', 'TVNew')
 
     t.is(data.length, 58)
-    t.is(data[0].title, 'Mahoutsukai no Yome')
+    t.is(data[0].title, 'Black Clover')
   } catch (e) {
     console.log(e.message)
     t.fail()
@@ -57,7 +69,7 @@ test('getSeasons with type TVCon returns the correct season', async t => {
   try {
     const data = await getSeason(2017, 'fall', 'TVCon')
 
-    t.is(data.length, 41)
+    t.is(data.length, 38)
     t.is(data[0].title, 'One Piece')
   } catch (e) {
     console.log(e.message)
@@ -69,8 +81,8 @@ test('getSeasons with type ONAs returns the correct season', async t => {
   try {
     const data = await getSeason(2017, 'fall', 'ONAs')
 
-    t.is(data.length, 56)
-    t.is(data[0].title, 'Hitori no Shita: The Outcast 2nd Season')
+    t.is(data.length, 59)
+    t.is(data[0].title, 'Net-juu no Susume')
   } catch (e) {
     console.log(e.message)
     t.fail()
@@ -105,7 +117,7 @@ test('getSeasons with type Movies returns the correct season', async t => {
   try {
     const data = await getSeason(2017, 'fall', 'Movies')
 
-    t.is(data.length, 20)
+    t.is(data.length, 21)
     t.is(data[0].title, 'Fate/stay night Movie: Heaven\'s Feel - I. Presage Flower')
   } catch (e) {
     console.log(e.message)
@@ -122,13 +134,13 @@ test('getSeasons returns the right season', async t => {
     t.is(typeof data.TVCon, 'object')
     t.is(typeof data.OVAs, 'object')
     t.is(typeof data.Movies, 'object')
-    t.is(data.TV.length, 97)
+    t.is(data.TV.length, 96)
     t.is(data.TVNew.length, 58)
-    t.is(data.TVCon.length, 41)
+    t.is(data.TVCon.length, 38)
     t.is(data.OVAs.length, 11)
-    t.is(data.Movies.length, 20)
-    t.is(data.TV[0].title, 'Mahoutsukai no Yome')
-    t.is(data.TVNew[0].title, 'Mahoutsukai no Yome')
+    t.is(data.Movies.length, 21)
+    t.is(data.TV[0].title, 'Black Clover')
+    t.is(data.TVNew[0].title, 'Black Clover')
     t.is(data.TVCon[0].title, 'One Piece')
   } catch (e) {
     console.log(e.message)
